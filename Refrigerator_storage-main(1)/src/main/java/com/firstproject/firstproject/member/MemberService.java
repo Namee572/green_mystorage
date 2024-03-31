@@ -40,7 +40,7 @@ public class MemberService {
 
     /* 로그인 */
 
-    public void login(MemberDto.LoginDto loginDto) {
+    public void login(MemberDto.LoginDto loginDto, Member dbmember) {
         Optional<Member> memberOptional = memberRepository.findByEmail(loginDto.email());
 
         if (memberOptional.isEmpty()) {

@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -35,12 +36,12 @@ public class MemberController {
 
 
     /* 로그인 */
-
     @PostMapping("/member/login")
-    public ResponseEntity<String> login(@Valid @RequestBody MemberDto.LoginDto loginDto)  {
+    public ResponseEntity<String> login(Authentication authentication)  {
         try {
-            memberService.login(loginDto);
-            return ResponseEntity.ok("로그인 성공");
+            Member member = (Member) authentication.getPrincipal();
+//            memberService.login(loginDto, dbmember);
+            return ResponseEntity.status(HttpStatus.OK).body("로그인 성공");
         } catch (MemberException e) {
             return ResponseEntity.status(e.getExceptionType().getHttpStatus())
                     .body(e.getExceptionType().getErrorMessage());
