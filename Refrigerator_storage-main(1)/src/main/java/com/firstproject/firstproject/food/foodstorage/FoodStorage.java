@@ -35,7 +35,7 @@ public class FoodStorage {
     private StorageType storageType;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @ManyToOne

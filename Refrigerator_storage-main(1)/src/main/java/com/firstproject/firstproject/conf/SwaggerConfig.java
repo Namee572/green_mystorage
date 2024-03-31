@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @OpenAPIDefinition(
-        info = @Info( title = "냉장고 게사판",
+        info = @Info( title = "냉장고 게시판",
                 description = "냉장고 게시판",
                 version = "v1.0.0"
         )

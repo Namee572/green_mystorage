@@ -45,12 +45,14 @@ public class FoodStorageService {
 
         foodStorageRepository.save(foodStorage);
     }
+
     // 보관리스트 전체조회
     public List<FoodStorage> getFoodStorage(Long memberid) {
         Optional<Member> memberOptional = memberRepository.findById(memberid);
         Member member = memberOptional.get();
         return foodStorageRepository.findByMember(member);
     }
+
     // 보관리스트 냉장조회
     public List<FoodStorage> getColdStorage(Long memberid) {
         Optional<Member> memberOptional = memberRepository.findById(memberid);
@@ -63,19 +65,21 @@ public class FoodStorageService {
             return Collections.emptyList();
         }
     }
+
     // 보관리스트 냉동조회
     public List<FoodStorage> getFrozenStorage(Long memberid) {
         Optional<Member> memberOptional = memberRepository.findById(memberid);
 
-        if(memberOptional.isPresent()) {
+        if (memberOptional.isPresent()) {
             Member member = memberOptional.get();
             return foodStorageRepository.findByMemberAndStorageType(member, StorageType.냉동);
         } else {
             return Collections.emptyList();
         }
     }
+
     // 보관리스트 유통기한 (설정날짜)임박 조회
-    public List<FoodStorage> Expiration() {
+    public Optional<FoodStorage> Expiration(Long member_id) {
         // LocalDate 오늘날짜 저장, 오늘날짜의 ()의 더한 날짜 설정값을 저장
         LocalDate today = LocalDate.now();
         // 원하는 일의 까지의 +1
@@ -83,16 +87,21 @@ public class FoodStorageService {
         // LocalDate 날짜를 Date 로 변환 -> Date 로 날짜 조회 위함
         Date expDay = Date.valueOf(getExpDay);
 
-        List<FoodStorage> foodStorages = foodStorageRepository.findByExpdateBefore(expDay);
+        Optional<FoodStorage> dbmember = foodStorageRepository.findById(member_id);
+        if (dbmember.isPresent()) {
 
-        // 각 FoodStorage에 대해 유통기한이 남은 일수를 계산하여 설정
-        for (FoodStorage foodStorage : foodStorages) {
-            LocalDate expirationDate = foodStorage.getExpdate().toLocalDate();
-            Long daysExp = ChronoUnit.DAYS.between(today, expirationDate);
-            foodStorage.setDaysExp(daysExp);
+            List<FoodStorage> foodStorages = foodStorageRepository.findByExpdateBefore(expDay);
+
+            // 각 FoodStorage에 대해 유통기한이 남은 일수를 계산하여 설정
+            for (FoodStorage foodStorage : foodStorages) {
+                LocalDate expirationDate = foodStorage.getExpdate().toLocalDate();
+                Long daysExp = ChronoUnit.DAYS.between(today, expirationDate);
+                foodStorage.setDaysExp(daysExp);
+            }
         }
-        return foodStorages;
+        return dbmember;
     }
+
     // 보관리스트 수정
     public void updateFoodStorage(Long foodStorageId, FoodStorage updatedFoodStorage) {
         Optional<FoodStorage> foodStorageOptional = foodStorageRepository.findById(foodStorageId);
@@ -108,6 +117,7 @@ public class FoodStorageService {
             foodStorageRepository.save(existingFoodStorage);
         }
     }
+
     // 보관리스트 삭제
     public void deleteFoodStorage(Long foodStorageId) {
         Optional<FoodStorage> foodStorageOptional = foodStorageRepository.findById(foodStorageId);

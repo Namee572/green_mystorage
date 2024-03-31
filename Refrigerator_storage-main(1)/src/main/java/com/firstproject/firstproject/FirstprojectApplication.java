@@ -7,14 +7,10 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-@EnableJpaAuditing
-public class FirstprojectApplication extends SpringBootServletInitializer {
+public class FirstprojectApplication{
 
 	public static void main(String[] args) {
 		SpringApplication.run(FirstprojectApplication.class, args);
 	}
-	@Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(FirstprojectApplication.class);
-    }
+
 }

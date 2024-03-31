@@ -13,7 +13,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Builder
-@Table(name = "MEMBER")
 @Schema(description = "Member 테이블 내용임.")
 public class Member extends BaseTimeEntity implements Serializable {
 

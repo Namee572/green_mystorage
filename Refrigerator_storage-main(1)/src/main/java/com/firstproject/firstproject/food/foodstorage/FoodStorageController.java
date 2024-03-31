@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/main")
@@ -51,9 +52,9 @@ public class FoodStorageController {
         return ResponseEntity.ok("FoodStorage deleted successfully");
     }
     // 마감일 임박
-    @GetMapping("/foodstorage/exp")
-    public ResponseEntity<List<FoodStorage>> Expiration() {
-        List<FoodStorage> get = foodStorageService.Expiration();
+    @GetMapping("/foodstorage/exp/{member_id}")
+    public ResponseEntity<Optional<FoodStorage>> Expiration(@PathVariable Long member_id) {
+        Optional<FoodStorage> get = foodStorageService.Expiration(member_id);
         return ResponseEntity.ok(get);
     }
 }
