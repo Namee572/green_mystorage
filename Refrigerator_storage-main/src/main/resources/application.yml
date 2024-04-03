@@ -1,0 +1,35 @@
+spring:
+  application:
+    name : firstproject
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mh?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    username: root
+    password: 1234
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: beauty1746@gmail.com
+    password: ynclt duxy epxj uctj
+    properties:
+      mail:
+      smtp:
+          auth: true
+          starttls:
+          enable: true
+
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create-drop
+    generate-ddl: true
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: always
