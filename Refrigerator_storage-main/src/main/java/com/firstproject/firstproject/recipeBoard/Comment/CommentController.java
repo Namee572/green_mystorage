@@ -34,13 +34,13 @@ public class CommentController {
     }
 
     // 댓글 수정
-    @PutMapping("/{userId}/{commentId}")
+    @PutMapping("/{commentId}/{userId}")
     @Operation(summary = "게시판 댓글 수정")
-    public ResponseEntity<String> updateComment(@PathVariable Long commentId,
-                                                @RequestBody Map<String, String> requestBody,
-                                                @RequestParam Long userId) {
-        String newContent = requestBody.get("newContent");
-        Comment updatedComment = commentService.updateComment(commentId, newContent, userId);
+    public ResponseEntity<String> updateComment(@PathVariable Long userId,
+                                                @PathVariable Long commentId,
+                                                @RequestBody Map<String, String> requestBody) {
+        String updatedContent = requestBody.get("content");
+        Comment updatedComment = commentService.updateComment(commentId, updatedContent, userId);
         return ResponseEntity.ok("댓글이 성공적으로 수정되었습니다.");
     }
 

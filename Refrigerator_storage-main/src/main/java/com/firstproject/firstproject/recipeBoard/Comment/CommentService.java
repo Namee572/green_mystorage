@@ -44,17 +44,18 @@ public class CommentService {
     }
 
     // 댓글 수정
-    public Comment updateComment(Long commentId, String newContent, Long userId) {
+    public Comment updateComment(Long commentId, String Content, Long userId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("댓글을 찾을 수 없습니다."));
         if (!comment.getMember().getId().equals(userId)) {
             throw new IllegalStateException("댓글을 수정할 권한이 없습니다.");
         }
 
-        comment.setContent(newContent);
+        comment.setContent(Content);
         Comment updatedComment = commentRepository.save(comment);
         return updatedComment;
     }
+
 
     // 댓글 삭제
     public void deleteComment(Long commentId, Long userId) {
